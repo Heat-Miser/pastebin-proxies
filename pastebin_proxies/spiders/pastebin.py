@@ -1,7 +1,6 @@
-import scrapy
 import re
-import requests
 import logging
+import scrapy
 from geoip import geolite2
 from scrapy.http import Request
 

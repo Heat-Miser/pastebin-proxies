@@ -43,7 +43,7 @@ class ProxiesListSpider(scrapy.Spider):
             yield Request("https://pastebin.com/raw%s" % (pastie.extract()), callback=self.extract_socks_proxies)
 
     def extract_http_proxies(self, response):
-        ip_regex = re.compile("(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5]):[0-9]{1,5}")
+        ip_regex = re.compile(r"(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5]):[0-9]{1,5}")
         for line in response.text.splitlines():
             for match in re.finditer(ip_regex, line):
                 ip = match.group().split(":")[0]
@@ -55,7 +55,7 @@ class ProxiesListSpider(scrapy.Spider):
                     }
 
     def extract_socks_proxies(self, response):
-        ip_regex = re.compile("(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5]):[0-9]{1,5}")
+        ip_regex = re.compile(r"(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5]):[0-9]{1,5}")
         for line in response.text.splitlines():
             for match in re.finditer(ip_regex, line):
                 ip = match.group().split(":")[0]

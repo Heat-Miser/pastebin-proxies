@@ -1,5 +1,7 @@
 """Custom Feed Exports extension."""
 import os
+import shutil
+from tempfile import NamedTemporaryFile
 
 from scrapy.extensions.feedexport import FileFeedStorage
 
@@ -13,8 +15,11 @@ class CustomFileFeedStorage(FileFeedStorage):
 
     def open(self, spider):
         """Return the opened file."""
+        res = NamedTemporaryFile()
+        return res
+
+    def store(self, file):
         dirname = os.path.dirname(self.path)
         if dirname and not os.path.exists(dirname):
             os.makedirs(dirname)
-        # changed from 'ab' to 'wb' to truncate file when it exists
-        return open(self.path, 'wb')
+        shutil.move(file.name, self.path)

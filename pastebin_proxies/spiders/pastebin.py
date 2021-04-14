@@ -20,8 +20,8 @@ class ProxiesListSpider(scrapy.Spider):
             'https://pastebin.com/u/spys1',
         ]
         urls2 = [
-            'https://pastebin.com/u/proxy_boy',
-            'https://pastebin.com/u/tisocks'
+            #'https://pastebin.com/u/proxy_boy',
+            #'https://pastebin.com/u/tisocks'
         ]
         for url in urls1:
             yield scrapy.Request(url=url, callback=self.parse_spys1)
@@ -30,7 +30,7 @@ class ProxiesListSpider(scrapy.Spider):
             yield scrapy.Request(url=url, callback=self.parse_proxy_boy)
 
     def parse_spys1(self, response):
-        pasties = response.css("table.maintable")[0].xpath("tr/td[1]/a/@href")[:2]
+        pasties = response.css("table.maintable")[0].xpath("./tr/td[1]/a/@href")[:3]
         for pastie in pasties:
             yield Request("https://pastebin.com/raw%s" % (pastie.extract()), callback=self.extract_http_proxies)
 
